@@ -4,7 +4,7 @@
     </description>
 
 	<property name="mycolorpicker.version" value="1.5.0"/>
-	<property name="extensions.root" value="C:/_toBackup/Dev/extensions_adobe" />
+	<property name="extensions.root" value="/home/yannick/Projets" />
 	<property name="project.root" value="${extensions.root}/MyColorPicker" />
 	<property name="extension.content" value="${project.root}/extension_content" />
 	<property name="shortcuts.scripts" value="${project.root}/shortcut_scripts" />
