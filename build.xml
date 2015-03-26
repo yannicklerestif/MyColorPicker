@@ -6,7 +6,7 @@
 	<property name="mycolorpicker.version" value="1.5.0"/>
 
 	<!--***************************** local properties ****************-->
-	<property name="project.root" value="/home/yannick/Projets/MyColorPicker" />
+	<property name="project.root" value="C:/Users/Yannick/git/MyColorPicker" />
 	<property name="PS.CC2014.scripts.presets" value="C:/Program Files/Adobe/Adobe Photoshop CC 2014/Presets/Scripts/yannick" />
 	<property name="MyColorPicker.extension.directory" value="C:/Users/Yannick/AppData/Roaming/Adobe/CEP/extensions/com.yannick.MyColorPicker" />	
 	
@@ -33,6 +33,7 @@
 	
 	<!--************************** dist ****************************-->
 	<target name="dist" description="dist for myself">
+		<mkdir dir="${dist.myself}"/>
 		<delete includeemptydirs="true">
 			<fileset dir="${dist.myself}" includes="**/*" />
 		</delete>
@@ -53,7 +54,7 @@
 		<delete file="${dist.myself.extension.content}/js/my_color_picker.js"/>
 		<move file="${dist.myself}/obfuscated.js" tofile="${dist.myself.extension.content}/js/my_color_picker.js"/>
 		<eclipse.refreshLocal resource="MyColorPicker" depth="infinite" />
-		<copy todir="${MyColorPicker.extension.directory">
+		<copy todir="${MyColorPicker.extension.directory}">
 			<fileset dir="${dist.myself.extension.content}" />
 		</copy>
 		<delete includeemptydirs="false">
@@ -68,6 +69,7 @@
 	<!--************************** package ****************************-->
 
 	<target name="package_all" description="package for adobe exchange">
+		<mkdir dir="${dist.public}"/>
 		<antcall target="package">
 			<param name="is_trial" value="false"/>
 			<param name="trial_suffix" value=""/>
