@@ -1,0 +1,122 @@
+<project name="MyProject" default="dist" basedir=".">
+	<description>
+        simple example build file
+    </description>
+
+	<property name="mycolorpicker.version" value="1.5.0"/>
+	<property name="extensions.root" value="C:/_toBackup/Dev/extensions_adobe" />
+	<property name="project.root" value="${extensions.root}/MyColorPicker" />
+	<property name="extension.content" value="${project.root}/extension_content" />
+	<property name="shortcuts.scripts" value="${project.root}/shortcut_scripts" />
+	<property name="dist" value="${project.root}/dist" />
+	<property name="dist.public" value="${dist}/public" />
+	<property name="dist.public.extension.content" value="${dist.public}/extension_content" />
+	<property name="dist.myself" value="${dist}/myself" />
+	<property name="dist.myself.extension.content" value="${dist.myself}/extension_content" />
+	<property name="PS.CC2014.scripts.presets" value="C:/Program Files/Adobe/Adobe Photoshop CC 2014/Presets/Scripts/yannick" />
+	<property name="shortcut.scripts.zip.file" value="C:/_toBackup/Dev/yannicklerestif.com/www/photoshop_stuff/shortcut_scripts.zip"/>
+	
+	<target name="replace.version">
+		<replace token="MYCOLORPICKER_VERSION" value="${mycolorpicker.version}${trial_suffix}">
+			<fileset dir="${replace.root}">
+				<include name="CSXS/manifest.xml" />
+				<include name="js/my_color_picker.js" />
+			</fileset>
+		</replace>
+	</target>
+	
+	
+	<!--************************** dist ****************************-->
+	<target name="dist" description="dist for myself">
+		<delete includeemptydirs="true">
+			<fileset dir="${dist.myself}" includes="**/*" />
+		</delete>
+		<copy todir="${dist.myself.extension.content}">
+			<fileset dir="${extension.content}"/>
+		</copy>
+		<antcall target="replace.version">
+			<param name="replace.root" value="${dist.myself.extension.content}"/>
+			<param name="trial_suffix" value=""/>
+		</antcall>
+		<java jar="${extensions.root}/yuicompressor-2.4.8.jar" fork="true" failonerror="true" maxmemory="128m">
+			<arg value="-o"/>
+			<arg value="dist/myself/obfuscated.js" />
+			<arg value="${dist.myself.extension.content}/js/my_color_picker.js" />
+			<arg value="--line-break"/>
+			<arg value="120"/>
+		</java>
+		<delete file="${dist.myself.extension.content}/js/my_color_picker.js"/>
+		<move file="${dist.myself}/obfuscated.js" tofile="${dist.myself.extension.content}/js/my_color_picker.js"/>
+		<eclipse.refreshLocal resource="MyColorPicker" depth="infinite" />
+		<copy todir="C:/Users/Yannick/AppData/Roaming/Adobe/CEP/extensions/com.yannick.MyColorPicker">
+			<fileset dir="${dist.myself.extension.content}" />
+		</copy>
+		<delete includeemptydirs="false">
+			<fileset dir="${PS.CC2014.scripts.presets}" includes="**/my_color_picker*" />
+		</delete>
+		<copy todir="${PS.CC2014.scripts.presets}">
+			<fileset dir="${shortcuts.scripts}" />
+		</copy>
+	</target>
+
+
+	<!--************************** package ****************************-->
+
+	<target name="package_all" description="package for adobe exchange">
+		<antcall target="package">
+			<param name="is_trial" value="false"/>
+			<param name="trial_suffix" value=""/>
+		</antcall>
+		<antcall target="package">
+			<param name="is_trial" value="true"/>
+			<param name="trial_suffix" value=".trial"/>
+		</antcall>
+	</target>
+	
+	<target name="package">
+		<delete includeemptydirs="true">
+			<fileset dir="${dist.public}" includes="**/*" />
+		</delete>
+		<copy todir="${dist.public.extension.content}">
+			<fileset dir="${extension.content}">
+				<exclude name="jsx/Photoshop_myself.jsx" />
+			</fileset>
+		</copy>
+		<antcall target="replace.version">
+			<param name="replace.root" value="${dist.public.extension.content}"/>
+		</antcall>
+		<replaceregexp byline="true">
+			<regexp pattern="var(\s*)isMyself(\s*)=(\s*)true(\s*);" />
+			<substitution expression="var isMyself = false;" />
+			<fileset dir="${dist.public.extension.content}">
+				<include name="js/my_color_picker.js" />
+			</fileset>
+		</replaceregexp>
+		<replaceregexp byline="true">
+			<regexp pattern="var(\s*)__t(\s*)=(\s*)false(\s*);" />
+			<substitution expression="var __t = ${is_trial};" />
+			<fileset dir="${dist.public.extension.content}">
+				<include name="js/my_color_picker.js" />
+			</fileset>
+		</replaceregexp>
+		<java jar="${extensions.root}/yuicompressor-2.4.8.jar" fork="true" failonerror="true" maxmemory="128m">
+			<arg value="-o"/>
+			<arg value="dist/public/obfuscated.js" />
+			<arg value="${dist.public.extension.content}/js/my_color_picker.js" />
+			<arg value="--line-break"/>
+			<arg value="120"/>
+		</java>
+		<delete file="${dist.public.extension.content}/js/my_color_picker.js"/>
+		<move file="${dist.public}/obfuscated.js" tofile="${dist.public.extension.content}/js/my_color_picker.js"/>
+		<exec executable="${extensions.root}/ZXPSignCmd.exe">
+			<arg value="-sign" />
+			<arg value="${dist.public.extension.content}" />
+			<arg value="${dist}/MyColorPicker-${mycolorpicker.version}${trial_suffix}.zxp" />
+			<arg value="${extensions.root}/yannick.p12" />
+			<arg value="yannick0_" />
+		</exec>
+		<delete file="${shortcut.scripts.zip.file}"/>
+		<zip destfile="${shortcut.scripts.zip.file}" basedir="${shortcuts.scripts}" />
+		<eclipse.refreshLocal resource="MyColorPicker" depth="infinite" />
+	</target>
+</project>

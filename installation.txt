@@ -1,0 +1,15 @@
+- Click on "Install" 
+- Make sure file synchronisation is on in Adobe Creative Cloud (Preferences/Files/Synchro on/off => on) 
+- In Home tab of Adobe Creative Cloud, you should see that MyColorPicker was installed.
+- If you want to use keyboard shortcuts (you should !), see instructions at http://yannicklerestif.com/photoshop_stuff/my_color_picker.php?oid=3#keyboard_shortcuts
+- Restart Photoshop. 
+- In Photoshop, click Window/Extensions/MyColorPicker to display the panel.
+
+That should do it ! If there is a problem, you can try to install it manually : 
+- Download MyColorPicker zxp extension package file : in the tab "Where to find it", click "Download / install another way", "Download with extension manager", "Download MyColorPicker", 
+and choose a place on your hard drive; 
+- Open Adobe Extension Manager. 
+- Pick a Photoshop version on the left (MyColorPicker works from CC 2014 on). 
+- File/Install, and pick the zxp file you downloaded. 
+- You may have to restart Photoshop. 
+- In Photoshop, click Window / Extensions / MyColorPicker to display the panel.

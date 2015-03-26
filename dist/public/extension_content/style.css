@@ -1,0 +1,178 @@
+body {
+	font-family: verdana;
+	font-size: 10px;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+
+/******** color swatches, focus state ***************/
+
+.color_swatch {
+	position: fixed;
+	top: 5px;
+	width: 33px;
+	background-color: gray;
+}
+
+#color_swatch_new {
+	height: 57px;
+	left: 5px;
+	background-color: gray;
+}
+
+#color_swatch_old {
+	height: 29px;
+	left: 38px;
+	background-color: gray;
+}
+
+#focus_state {
+	position: fixed;
+	top: 5px;
+	left: 76px;
+	width: 154px;
+	height: 1px;
+	background-color: rgba(0,0,0,255);
+}
+
+
+/******** spinners ***************/
+
+.spinner {
+	position: fixed;
+	height: 13px;
+	padding: 5px 5px 5px 6px;
+	text-align: left;
+}
+
+.spinner-rgb {
+	width: 37px;	
+	background-color: rgba(128,128,128,255);
+	top: 11px;
+}
+
+.spinner-hsl {
+	width: 32px;	
+	background-color: rgba(192,192,192,255);
+	top: 39px;
+	cursor: pointer;
+}
+
+.updown-button {
+	background-color: rgba(192,192,192,255);
+	position: fixed;
+	height: 11px;
+	width: 15px;
+	z-index: 1;
+	cursor: pointer
+}
+
+.up-button {
+	top: 39px;
+}
+
+.down-button {
+	top: 51px;
+}
+
+
+
+/************** RGB *****************/
+
+#R_spinner {
+	left: 76px;
+	z-index:0;
+}
+#G_spinner {
+	left: 129px;
+}
+#B_spinner {
+	left: 182px;
+}
+
+/************** HSL *****************/
+
+#H_spinner {
+	left: 43px;
+}
+
+#H_up {
+	left: 87px;
+}
+
+#H_down {
+	left: 87px;	
+}
+
+#S_spinner {
+	left: 107px;
+}
+
+#S_up {
+	left: 151px;
+}
+
+#S_down {
+	left: 151px;	
+}
+
+#L_spinner {
+	left: 171px;
+}
+
+#L_up {
+	left: 215px;
+}
+
+#L_down {
+	left: 215px;	
+}
+
+
+/******************** canvas1 et hue ******************/
+
+#canvas1 {
+	position: fixed;
+	left: 30px;
+	top: 67px;
+	z-index: 0;
+	cursor: pointer;
+}
+
+#marker {
+	pointer-events:none;
+	z-index: 10;
+}
+
+#hue_slider {
+	position: fixed;
+	left: 5px;
+	top: 67px;
+	width: 20px;
+	z-index: 0;
+	cursor: pointer;
+}
+
+#hue_marker {
+	pointer-events:none;
+	z-index: 10;
+}
+
+
+/**************************************************************/
+
+#_t_div {
+	background-color:rgba(128,128,128,255);
+	z-index:20;
+	position: fixed;
+	top:0px;
+	left:0px;
+	width:0px;
+	height:0px;
+}

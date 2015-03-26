@@ -1,0 +1,8 @@
+function sendHSLEvent(index, increment) {
+	var externalObjectName = "PlugPlugExternalObject";
+    var myLib = new ExternalObject("lib:" + externalObjectName);
+    var event=new CSXSEvent();
+    event.type="MyColorPicker_incrementHSLEvent";
+    event.data=index + "," + increment;
+    event.dispatch();
+}
