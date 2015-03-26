@@ -14,7 +14,7 @@
 	<property name="dist.myself" value="${dist}/myself" />
 	<property name="dist.myself.extension.content" value="${dist.myself}/extension_content" />
 	<property name="PS.CC2014.scripts.presets" value="C:/Program Files/Adobe/Adobe Photoshop CC 2014/Presets/Scripts/yannick" />
-	<property name="shortcut.scripts.zip.file" value="C:/_toBackup/Dev/yannicklerestif.com/www/photoshop_stuff/shortcut_scripts.zip"/>
+	<property name="shortcut.scripts.zip.file" value="${dist}/shortcut_scripts.zip"/>
 	
 	<target name="replace.version">
 		<replace token="MYCOLORPICKER_VERSION" value="${mycolorpicker.version}${trial_suffix}">
