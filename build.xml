@@ -4,8 +4,14 @@
     </description>
 
 	<property name="mycolorpicker.version" value="1.5.0"/>
-	<property name="extensions.root" value="/home/yannick/Projets" />
-	<property name="project.root" value="${extensions.root}/MyColorPicker" />
+
+	<!--***************************** local properties ****************-->
+	<property name="project.root" value="/home/yannick/Projets/MyColorPicker" />
+	<property name="PS.CC2014.scripts.presets" value="C:/Program Files/Adobe/Adobe Photoshop CC 2014/Presets/Scripts/yannick" />
+	<property name="MyColorPicker.extension.directory" value="C:/Users/Yannick/AppData/Roaming/Adobe/CEP/extensions/com.yannick.MyColorPicker" />	
+	
+	<!--***************************** other properties ****************-->
+	<property name="tools.directory" value="${project.root}/tools" />
 	<property name="extension.content" value="${project.root}/extension_content" />
 	<property name="shortcuts.scripts" value="${project.root}/shortcut_scripts" />
 	<property name="dist" value="${project.root}/dist" />
@@ -13,7 +19,6 @@
 	<property name="dist.public.extension.content" value="${dist.public}/extension_content" />
 	<property name="dist.myself" value="${dist}/myself" />
 	<property name="dist.myself.extension.content" value="${dist.myself}/extension_content" />
-	<property name="PS.CC2014.scripts.presets" value="C:/Program Files/Adobe/Adobe Photoshop CC 2014/Presets/Scripts/yannick" />
 	<property name="shortcut.scripts.zip.file" value="${dist}/shortcut_scripts.zip"/>
 	
 	<target name="replace.version">
@@ -38,7 +43,7 @@
 			<param name="replace.root" value="${dist.myself.extension.content}"/>
 			<param name="trial_suffix" value=""/>
 		</antcall>
-		<java jar="${extensions.root}/yuicompressor-2.4.8.jar" fork="true" failonerror="true" maxmemory="128m">
+		<java jar="${tools.directory}/yuicompressor-2.4.8.jar" fork="true" failonerror="true" maxmemory="128m">
 			<arg value="-o"/>
 			<arg value="dist/myself/obfuscated.js" />
 			<arg value="${dist.myself.extension.content}/js/my_color_picker.js" />
@@ -48,7 +53,7 @@
 		<delete file="${dist.myself.extension.content}/js/my_color_picker.js"/>
 		<move file="${dist.myself}/obfuscated.js" tofile="${dist.myself.extension.content}/js/my_color_picker.js"/>
 		<eclipse.refreshLocal resource="MyColorPicker" depth="infinite" />
-		<copy todir="C:/Users/Yannick/AppData/Roaming/Adobe/CEP/extensions/com.yannick.MyColorPicker">
+		<copy todir="${MyColorPicker.extension.directory">
 			<fileset dir="${dist.myself.extension.content}" />
 		</copy>
 		<delete includeemptydirs="false">
@@ -99,7 +104,7 @@
 				<include name="js/my_color_picker.js" />
 			</fileset>
 		</replaceregexp>
-		<java jar="${extensions.root}/yuicompressor-2.4.8.jar" fork="true" failonerror="true" maxmemory="128m">
+		<java jar="${tools.directory}/yuicompressor-2.4.8.jar" fork="true" failonerror="true" maxmemory="128m">
 			<arg value="-o"/>
 			<arg value="dist/public/obfuscated.js" />
 			<arg value="${dist.public.extension.content}/js/my_color_picker.js" />
@@ -108,11 +113,11 @@
 		</java>
 		<delete file="${dist.public.extension.content}/js/my_color_picker.js"/>
 		<move file="${dist.public}/obfuscated.js" tofile="${dist.public.extension.content}/js/my_color_picker.js"/>
-		<exec executable="${extensions.root}/ZXPSignCmd.exe">
+		<exec executable="${tools.directory}/ZXPSignCmd.exe">
 			<arg value="-sign" />
 			<arg value="${dist.public.extension.content}" />
 			<arg value="${dist}/MyColorPicker-${mycolorpicker.version}${trial_suffix}.zxp" />
-			<arg value="${extensions.root}/yannick.p12" />
+			<arg value="${tools.directory}/yannick.p12" />
 			<arg value="yannick0_" />
 		</exec>
 		<delete file="${shortcut.scripts.zip.file}"/>
